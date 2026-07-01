@@ -1,0 +1,77 @@
+# ========================
+# Environment & Secrets
+# ========================
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# ========================
+# Node.js / Backend
+# ========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# Prisma
+backend/prisma/migrations/
+
+# Upload & generated files
+backend/uploads/
+backend/dist/
+
+# ========================
+# Frontend (React + Vite)
+# ========================
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.vite/
+*.local
+
+# ========================
+# Arduino IDE
+# ========================
+# Build output
+build/
+*.elf
+*.bin
+*.hex
+*.map
+
+# Arduino cache
+.arduino15/
+*.cache
+
+# ========================
+# OS & Editor
+# ========================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# Windows
+desktop.ini
+$RECYCLE.BIN/
+
+# VSCode
+.vscode/
+!.vscode/extensions.json
+
+# JetBrains
+.idea/
+*.iml
+
+# ========================
+# Logs & Temp
+# ========================
+logs/
+*.log
+tmp/
+temp/
