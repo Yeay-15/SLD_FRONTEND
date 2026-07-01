@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, Search, Users, ClipboardList, UserPlus } from "lucide-react";
 import axios from "axios";
+import { format, parseISO } from "date-fns";
+import { id } from "date-fns/locale";
 import ClassDetailModal from "./ClassDetailModal";
 import AttendanceView from "./AttendanceView";
 import ClassUserManagement from "./ClassUserManagement";
 import AddClassModal from "./AddClassModal";
+
+const formatDateTime = (dateTimeStr) => {
+  try {
+    const date = parseISO(dateTimeStr);
+    return format(date, "d MMMM yyyy, HH:mm", { locale: id });
+  } catch (error) {
+    return dateTimeStr;
+  }
+};
 
 const ClassManagement = () => {
   const [classes, setClasses] = useState([]);
@@ -113,8 +124,8 @@ const ClassManagement = () => {
                 <div key={cls.id} className="grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_0.5fr] gap-4 p-4 items-center hover:bg-gray-50">
                   <div>{cls.kelas}</div>
                   <div>{cls.matakuliah}</div>
-                  <div>{cls.startTime}</div>
-                  <div>{cls.endTime}</div>
+                  <div>{formatDateTime(cls.startTime)}</div>
+                  <div>{formatDateTime(cls.endTime)}</div>
                   <div className="flex items-center">
                     <Users size={16} className="text-gray-400 mr-2" />
                     <span>{cls.users?.length || 0}</span>
