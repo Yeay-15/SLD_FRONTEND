@@ -1,12 +1,13 @@
 // src/components/layout/Layout.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
-import { LayoutDashboard, Users, BookOpen, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, BookOpen, LogOut, Menu, X } from "lucide-react";
 import { authService } from "../../services/auth.service";
 
 const Layout = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     authService.logout();
@@ -20,11 +21,28 @@ const Layout = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 overflow-hidden">
+      {/* Mobile overlay backdrop */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-30 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <div className="w-64 bg-white shadow-md flex flex-col">
-        <div className="p-6 border-b">
+      <div
+        className={`fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-md flex flex-col transform transition-transform duration-200 ease-in-out
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static md:z-auto`}
+      >
+        <div className="p-6 border-b flex items-center justify-between">
           <h1 className="text-2xl font-bold text-blue-600">Smart Lock</h1>
+          <button
+            className="md:hidden text-gray-500"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <X size={22} />
+          </button>
         </div>
         <nav className="flex-1 p-4 space-y-2">
           {navItems.map((item) => {
@@ -34,6 +52,7 @@ const Layout = () => {
               <Link
                 key={item.name}
                 to={item.path}
+                onClick={() => setSidebarOpen(false)}
                 className={`flex items-center p-3 rounded-lg transition-colors ${
                   isActive
                     ? "bg-blue-50 text-blue-600 font-semibold"
@@ -58,8 +77,17 @@ const Layout = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 overflow-auto">
-        <Outlet />
+      <div className="flex-1 flex flex-col min-w-0 overflow-auto">
+        {/* Mobile top bar */}
+        <div className="md:hidden flex items-center gap-3 bg-white border-b p-4 sticky top-0 z-20">
+          <button className="text-gray-600" onClick={() => setSidebarOpen(true)}>
+            <Menu size={24} />
+          </button>
+          <h1 className="text-lg font-bold text-blue-600">Smart Lock</h1>
+        </div>
+        <div className="flex-1 overflow-auto">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
