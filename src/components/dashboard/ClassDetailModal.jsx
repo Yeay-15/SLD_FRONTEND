@@ -15,7 +15,13 @@ const ClassDetailModal = ({ classData, onClose, onUpdate }) => {
     if (classData) {
       const formatDateForInput = (dateString) => {
         const date = new Date(dateString);
-        return date.toISOString().slice(0, 16);
+        const pad = (n) => String(n).padStart(2, "0");
+        const year = date.getFullYear();
+        const month = pad(date.getMonth() + 1);
+        const day = pad(date.getDate());
+        const hours = pad(date.getHours());
+        const minutes = pad(date.getMinutes());
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
       };
 
       setFormData({
@@ -32,9 +38,14 @@ const ClassDetailModal = ({ classData, onClose, onUpdate }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
+      const payload = {
+        ...formData,
+        startTime: new Date(formData.startTime).toISOString(),
+        endTime: new Date(formData.endTime).toISOString(),
+      };
       await axios.put(
         `https://sdlbackend-production.up.railway.app/api/v1/class/${classData.id}`,
-        formData,
+        payload,
         {
           headers: { Authorization: token },
         }

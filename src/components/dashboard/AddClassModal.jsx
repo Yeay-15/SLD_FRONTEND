@@ -16,7 +16,12 @@ const AddClassModal = ({ onClose, onAdd }) => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      await axios.post("https://sdlbackend-production.up.railway.app/api/v1/class", formData, {
+      const payload = {
+        ...formData,
+        startTime: new Date(formData.startTime).toISOString(),
+        endTime: new Date(formData.endTime).toISOString(),
+      };
+      await axios.post("https://sdlbackend-production.up.railway.app/api/v1/class", payload, {
         headers: { Authorization: token },
       });
       if (onAdd) {
