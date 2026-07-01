@@ -82,15 +82,15 @@ const ClassManagement = () => {
   );
 
   return (
-    <div className="p-6">
-      <div className="bg-white rounded-xl shadow-md p-6">
-        <div className="flex justify-between items-center mb-6">
-          <div className="relative">
+    <div className="p-4 md:p-6">
+      <div className="bg-white rounded-xl shadow-md p-4 md:p-6">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
+          <div className="relative w-full sm:w-64">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <input
               type="text"
               placeholder="Cari kelas..."
-              className="pl-10 pr-4 py-2 w-64 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -106,7 +106,7 @@ const ClassManagement = () => {
         </div>
 
         <div className="overflow-x-auto">
-          <div className="grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_0.5fr] gap-4 p-4 text-sm font-medium text-gray-500 bg-gray-50 border-b">
+          <div className="grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_0.5fr] gap-4 p-4 text-sm font-medium text-gray-500 bg-gray-50 border-b min-w-[700px]">
             <div>KELAS</div>
             <div>MATA KULIAH</div>
             <div>WAKTU MULAI</div>
@@ -121,7 +121,7 @@ const ClassManagement = () => {
               <div className="p-4 text-center text-gray-500">Tidak ada data kelas</div>
             ) : (
               filteredClasses.map((cls) => (
-                <div key={cls.id} className="grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_0.5fr] gap-4 p-4 items-center hover:bg-gray-50">
+                <div key={cls.id} className="grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_0.5fr] gap-4 p-4 items-center hover:bg-gray-50 min-w-[700px]">
                   <div>{cls.kelas}</div>
                   <div>{cls.matakuliah}</div>
                   <div>{formatDateTime(cls.startTime)}</div>
