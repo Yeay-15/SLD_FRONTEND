@@ -49,7 +49,7 @@ const ClassManagement = () => {
     if (window.confirm("Apakah anda yakin ingin menghapus kelas ini?")) {
       try {
         const token = localStorage.getItem("token");
-        await axios.delete(`http://localhost:3000/api/v1/class/${classId}`, {
+        await axios.delete(`https://sdlbackend-production.up.railway.app/api/v1/class/${classId}`, {
           headers: { Authorization: token },
         });
         fetchClasses();
